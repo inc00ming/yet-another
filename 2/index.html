@@ -1,308 +1,310 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fetal Monitoring Flashcards</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f4f7f6;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .container {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 700px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .flashcard-wrapper {
-            perspective: 1000px; /* For 3D flip effect */
-            height: 250px; /* Fixed height for flashcard */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-
-        .flashcard {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            cursor: pointer;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background-color: #fdfdfd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .flashcard.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .flashcard-front, .flashcard-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            font-size: 1.3em;
-            line-height: 1.6;
-            box-sizing: border-box;
-            word-wrap: break-word; /* Ensure long words break */
-            white-space: pre-wrap; /* Preserve whitespace and allow wrapping */
-        }
-
-        .flashcard-back {
-            transform: rotateY(180deg);
-            background-color: #e8f5e9; /* Light green for answer */
-            color: #2e7d32;
-        }
-
-        .flashcard-front {
-            background-color: #e3f2fd; /* Light blue for question */
-            color: #1976d2;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        button {
-            background-color: #4CAF50; /* Green */
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-            margin: 0 10px;
-            min-width: 120px;
-        }
-
-        button:hover:not(:disabled) {
-            background-color: #45a049;
-        }
-
-        button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-
-        .card-counter {
-            font-size: 1.1em;
-            font-weight: 500;
-            color: #555;
-            min-width: 80px;
-        }
-
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 25px;
-            font-size: 2.2em;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            .flashcard-front, .flashcard-back {
-                font-size: 1.1em;
-            }
-            button {
-                padding: 10px 15px;
-                font-size: 0.9em;
-            }
-            .controls {
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Fetal Monitoring Flashcards</title>
+        <style>
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                display: flex;
                 flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                background-color: #f4f7f6;
+                color: #333;
+                margin: 0;
+                padding: 20px;
+                box-sizing: border-box;
             }
+
+            .container {
+                background-color: #ffffff;
+                border-radius: 12px;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+                padding: 30px;
+                max-width: 700px;
+                width: 100%;
+                text-align: center;
+                position: relative;
+                margin-bottom: 20px;
+            }
+
+            .flashcard-wrapper {
+                perspective: 1000px; /* For 3D flip effect */
+                height: 250px; /* Fixed height for flashcard */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 25px;
+            }
+
+            .flashcard {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                transition: transform 0.6s;
+                transform-style: preserve-3d;
+                cursor: pointer;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                background-color: #fdfdfd;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .flashcard.flipped {
+                transform: rotateY(180deg);
+            }
+
+            .flashcard-front,
+            .flashcard-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                font-size: 1.3em;
+                line-height: 1.6;
+                box-sizing: border-box;
+                word-wrap: break-word; /* Ensure long words break */
+                white-space: pre-wrap; /* Preserve whitespace and allow wrapping */
+            }
+
+            .flashcard-back {
+                transform: rotateY(180deg);
+                background-color: #e8f5e9; /* Light green for answer */
+                color: #2e7d32;
+            }
+
+            .flashcard-front {
+                background-color: #e3f2fd; /* Light blue for question */
+                color: #1976d2;
+            }
+
+            .controls {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 20px;
+            }
+
             button {
-                margin: 10px 0;
+                background-color: #4caf50; /* Green */
+                color: white;
+                padding: 12px 25px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 1em;
+                transition: background-color 0.3s ease;
+                margin: 0 10px;
+                min-width: 120px;
             }
+
+            button:hover:not(:disabled) {
+                background-color: #45a049;
+            }
+
+            button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+
             .card-counter {
-                margin-top: 15px;
+                font-size: 1.1em;
+                font-weight: 500;
+                color: #555;
+                min-width: 80px;
             }
+
             h1 {
-                font-size: 1.8em;
+                color: #2c3e50;
+                margin-bottom: 25px;
+                font-size: 2.2em;
             }
-        }
-    </style>
-</head>
-<body>
-    <h1>Fetal Monitoring Flashcards</h1>
 
-    <div class="container">
-        <div class="flashcard-wrapper">
-            <div id="flashcard" class="flashcard">
-                <div class="flashcard-front" id="question"></div>
-                <div class="flashcard-back" id="answer"></div>
+            @media (max-width: 768px) {
+                .container {
+                    padding: 20px;
+                }
+                .flashcard-front,
+                .flashcard-back {
+                    font-size: 1.1em;
+                }
+                button {
+                    padding: 10px 15px;
+                    font-size: 0.9em;
+                }
+                .controls {
+                    flex-direction: column;
+                }
+                button {
+                    margin: 10px 0;
+                }
+                .card-counter {
+                    margin-top: 15px;
+                }
+                h1 {
+                    font-size: 1.8em;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Fetal Monitoring Flashcards</h1>
+
+        <div class="container">
+            <div class="flashcard-wrapper">
+                <div id="flashcard" class="flashcard">
+                    <div class="flashcard-front" id="question"></div>
+                    <div class="flashcard-back" id="answer"></div>
+                </div>
             </div>
+            <div class="controls">
+                <button id="prevBtn" disabled>Previous</button>
+                <button id="flipBtn">Flip Card</button>
+                <button id="nextBtn">Next</button>
+            </div>
+            <div class="card-counter" id="cardCounter"></div>
         </div>
-        <div class="controls">
-            <button id="prevBtn" disabled>Previous</button>
-            <button id="flipBtn">Flip Card</button>
-            <button id="nextBtn">Next</button>
-        </div>
-        <div class="card-counter" id="cardCounter"></div>
-    </div>
 
-    <script>
-        const flashcardsData = [
-            {"question":"Düşük riskli gebelerde fetüs izlemi için kişiselleştirilmiş bakım planının bir parçası olarak önerilen yöntem hangisidir?","answer":"Aralıklı Oskültasyon"},
-            {"question":"Doğum süreci boyunca fetal kalp atış hızı izleme yönteminin değişebilmesinin temel nedeni nedir?","answer":"Risk değerlendirmesinin sürekli bir süreç olması."},
-            {"question":"Aralıklı oskültasyon işlemi hangi iki araçla gerçekleştirilebilir?","answer":"Pinard stetoskop veya el Doppleri."},
-            {"question":"Doğumun birinci evresinde aralıklı oskültasyon ne zaman ve ne kadar süreyle uygulanmalıdır?","answer":"Kontraksiyondan hemen sonra en az $30$ saniye boyunca."},
-            {"question":"Aralıklı oskültasyon düşük riskli gebelerde hangi zaman aralıklarıyla tekrarlanmalıdır?","answer":"Her $15-30$ dakikada bir."},
-            {"question":"Anne ve fetal kalp atışlarını ayırt etmek için anne nabzı hangi sıklıkla palpe edilmelidir?","answer":"Her saat başı."},
-            {"question":"Aralıklı oskültasyon sırasında fetal kalp atışı tespit edilemezse ebe ne yapmalıdır?","answer":"Acil ultrason değerlendirmesi için hekime bilgi vermelidir."},
-            {"question":"Doğum eylemi başlangıcından itibaren FKH'da kaç atımlık bir azalma ebeyi daha sık oskültasyon yapmaya yöneltmelidir?","answer":"$20$ atım ve üzerindeki azalmalar."},
-            {"question":"Aralıklı oskültasyon sırasında klinik tabloda riskli bir durum gelişirse hangi fetal izlem yöntemine geçilmelidir?","answer":"Sürekli Elektronik Fetal Monitörizasyon (EFM)."},
-            {"question":"Daha önce sezaryen doğum öyküsü olan bir gebede hangi fetal izleme yöntemi tercih edilmelidir?","answer":"Sürekli Elektronik Fetal Monitörizasyon (EFM)."},
-            {"question":"Fetal büyüme kısıtlılığında (tahmini fetal ağırlık $3$. persentil altı) hangi fetal değerlendirme yöntemi önerilir?","answer":"Sürekli Elektronik Fetal Monitörizasyon (EFM)."},
-            {"question":"Uterus kontraksiyonları $10$ dakikada kaç adet olduğunda intrapartum risk faktörü olarak kabul edilip EFM'ye geçilmelidir?","answer":"$5$ veya daha fazla kasılma."},
-            {"question":"EFM öncesinde fundus yüksekliğini ve fetüsün sırt pozisyonunu belirlemek için kullanılan fiziksel muayene yöntemi nedir?","answer":"Leopold manevraları."},
-            {"question":"EFM uygulamasında uterus kasılmalarını takip eden Toko transduseri karın üzerinde nereye yerleştirilmelidir?","answer":"Uterin fundusun en tepe noktasına."},
-            {"question":"EFM işlemi sırasında gebenin hangi pozisyonda yatması önerilir?","answer":"Sol yan pozisyon."},
-            {"question":"Doğumun aktif fazında EFM trasesi kaç dakikada bir değerlendirilmelidir?","answer":"$30$ dakikada bir."},
-            {"question":"Doğumun geçiş fazında EFM trasesi hangi sıklıkla değerlendirilmelidir?","answer":"$15$ dakikada bir."},
-            {"question":"Normal bazal fetal kalp hızı (FKH) aralığı nedir?","answer":"$110-160$ atım/dakika."},
-            {"question":"Fetal taşikardi tanısı koymak için bazal kalp hızının en az kaç dakika süreyle $160$ atım/dakika üzerinde olması gerekir?","answer":"$10$ dakika."},
-            {"question":"FKH'nın en az $10$ dakika değerlendirilmesi sonucunda $110$ atım/dakika altında olmasına ne ad verilir?","answer":"Fetal bradikardi."},
-            {"question":""Fetal oksijenizasyonun yeterliliğini gösteren, FKH'nın bazal düzeydeki iniş çıkışlarını ifade eden parametre nedir?"","answer":"Variabilite."},
-            {"question":"Variabilite yokluğu (No variability) tanımında FKH amplitüdü hangi aralıktadır?","answer":"$0-2$ atım/dakika."},
-            {"question":"Azalmış variabilitede (Minimal variability) FKH amplitüdü kaç atım aralığındadır?","answer":"$3-5$ atım/dakika."},
-            {"question":"Normal variabilite durumunda FKH'ndaki amplitüd değerleri nedir?","answer":"$6-25$ atım/dakika."},
-            {"question":"Artmış variabilitenin (Marked variability) tanım kriteri nedir?","answer":"Amplitüdün $25$ atım/dakika ve üzerinde olması."},
-            {"question":"Doğumun birinci evresinde akselerasyon kabul edilmesi için FKH artışının en az ne kadar sürmesi gerekir?","answer":"$15$ saniye."},
-            {"question":"Akselerasyon tanımı için bazal kalp hızında en az kaç atımlık bir artış izlenmelidir?","answer":"$15$ atım."},
-            {"question":""Uterus kontraksiyonu ile eş zamanlı başlayan, fetal baş basısına bağlı görülen deselerasyon türü hangisidir?"","answer":"Erken deselerasyon."},
-            {"question":"Erken deselerasyonun EFM trasesinde oluşturduğu karakteristik şekil nedir?","answer":"Ters ayna şekli."},
-            {"question":"Erken deselerasyonda FKH'daki düşüş en fazla kaç atım olmaktadır?","answer":"$15$ atım."},
-            {"question":"Umbilikal kordonun sıkışmasına bağlı meydana geldiği kabul edilen deselerasyon türü nedir?","answer":"Variabl (Değişken) deselerasyon."},
-            {"question":""Variabl deselerasyonda FKH, $30$ saniyede en düşük noktasına kaç atımlık düşüşle ulaşır?"","answer":"$15$ atım."},
-            {"question":"Uteroplasental yetmezliğe işaret eden ve kontraksiyonun doruk noktasından sonra başlayan deselerasyon türü hangisidir?","answer":"Geç deselerasyon."},
-            {"question":"Uzamış deselerasyon tanısı için FKH düşüşünün en az ne kadar sürmesi gerekir?","answer":"$2$ dakika."},
-            {"question":"Uzamış deselerasyon kaçıncı dakikadan sonra bazal kalp hızına dönmezse fetal taşikardi/bradikardi olarak değerlendirilir?","answer":"$10$ dakika."},
-            {"question":""FKH'nda $5-15$ atımlık düzenli dalga görünümü oluşturan, $3-5$ dakika frekansındaki patern nedir?"","answer":"Sinusoidal patern."},
-            {"question":"EFM yorumunda riskli bir durum tespit edildiğinde ebelerin uygulayacağı ilk girişimlerden biri nedir?","answer":"Gebeye sol yan ya da semi-fowler pozisyonu vermek."},
-            {"question":"Fetal distres şüphesinde uterotonik (oksitosin) ajan uygulanıyorsa izlenmesi gereken yol nedir?","answer":"Uygulamanın durdurulması ya da azaltılması."},
-            {"question":"Kategori 1 (Normal) trase kriterlerinde variabilite durumu nasıl olmalıdır?","answer":"Normal."},
-            {"question":"Bazal FKH'nın $110-160$ atım/dk olması ve erken deselerasyon varlığı hangi EFM kategorisine girer?","answer":"Kategori 1."},
-            {"question":"Fetal stimülasyon sonrası akselerasyon görülmemesi ve azalmış variabilite hangi kategoride değerlendirilir?","answer":"Kategori 2 (Şüpheli/Belirsiz)."},
-            {"question":"Kategori 3 (Anormal) trasenin temel variabilite özelliği nedir?","answer":"Variabilite yokluğu."},
-            {"question":"Tekrarlayan variabl deselerasyonlar ve variabilite yokluğu birlikte görüldüğünde hangi kategori tanısı konur?","answer":"Kategori 3."},
-            {"question":"İntrauterin resüsitasyon yöntemlerinin temel amacı nedir?","answer":""Hipoksik serebral palsi, iskemik ensefalopati ve mortaliteyi önlemek.""},
-            {"question":"Fetal iyilik halini doğrulamak için hekim tarafından uygulanan akselerasyon oluşturma testlerinden biri nedir?","answer":"Digital baş stimülasyonu (veya vibroakustik stimülasyon)."},
-            {"question":"Kategori 3 traselerde uteroplasental perfüzyonu artırma çabalarına rağmen düzelme olmazsa ne yapılmalıdır?","answer":"Acil doğum (sezaryen) hazırlığına başlanmalıdır."},
-            {"question":"Mekonyumlu amniyotik mayi varlığı fetüste hangi riskli durumun işareti olabilir?","answer":"Fetal distres."},
-            {"question":"Partogramda mekonyumlu amniyotik mayi şiddetini göstermek için kullanılan derecelendirme sembolleri nelerdir?","answer":""$+, ++, +++$"."},
-            {"question":"FKH deselerasyonlarının partogram kayıtlarında 'Geç' olduğunu belirtmek için hangi harf kullanılır?","answer":"G."},
-            {"question":"Partogramda 'Kaput Suksadenum' ve 'Moulding' için hangi skor ebeyi hekimi bilgilendirmeye yöneltmelidir?","answer":"$+++$ (Üç artı)."},
-            {"question":"Bazal fetal kalp hızının hangi değerlerin dışında olması partogramda hekime bildirim kriteridir?","answer":"$< 110$ veya $\ge 160$ atım/dakika."},
-            {"question":"Amniyotik mayinin hangi özellikleri fetüs izleminde hekime haber verilmesini gerektirir?","answer":"Kanlı veya mekonyumlu olması."},
-            {"question":"Fetal pozisyonun hangi durumlarda olması partogram izleminde hekim bilgilendirme kriteridir?","answer":"Oksiput posterior veya oksiput transvers."},
-            {"question":"Amniyotik sıvıdaki mekonyum varlığı yenidoğanda hangi ciddi komplikasyona yol açabilir?","answer":"Mekonyum aspirasyon sendromu."},
-            {"question":"Düşük riskli gebelerde doğum salonuna ilk kabulde fetal kalp hızı paternini değerlendirmek için ne yapılmalıdır?","answer":"$20$ dakikalık EFM trasesi yazdırılmalıdır."},
-            {"question":"EFM trasesinde bazal nabzın $100$ atım/dakika altına inmesi ve variabilite kaybı ebeyi hangi acil duruma hazırlamalıdır?","answer":"Acil müdahale ve hekim bilgilendirme."},
-            {"question":"Vajinal muayenede kordon nabzı hissedilmesi hangi obstetrik acil durumu gösterir?","answer":"Kordon sarkması (prolapsusu)."},
-            {"question":"Kordon sarkması şüphesinde fetal kalp hızı paterninde genellikle hangi değişiklik görülür?","answer":"Ani şiddetli bradikardi veya tekrarlayan şiddetli değişken yavaşlamalar."},
-            {"question":"Fetal distres tanısı konulan gebede perinatal mortaliteyi önlemek için sezaryen en geç kaç dakika içinde yapılmalıdır?","answer":"$30$ dakika."},
-            {"question":"Doğumun ikinci evresinde fetal baş perineyi kabartmaya başladığında fetal kalp sesleri ne zaman dinlenmelidir?","answer":"Kontraksiyonlardan hemen sonra."},
-            {"question":"Makat prezentasyonda fetal kalp sesleri genellikle annenin karnında nerede en iyi duyulur?","answer":"Göbek (umbilikus) seviyesinin üzerinde."},
-            {"question":"Amniyotomi (zarların yapay rüptürü) sonrası fetal kalp hızı neden tekrar değerlendirilmelidir?","answer":"Kordon basısı veya prolapsusu riskini ekarte etmek için."},
-            {"question":"Yenidoğan doğduktan sonra Apgar skoru değerlendirmesi hangi dakikalarda yapılmalıdır?","answer":"$1.$ ve $5.$ dakikalarda."},
-            {"question":"Trasede değişken (variabl) deselerasyonlar sürekli tekrarlıyor ve tedaviye yanıt vermiyorsa fetüste hangi durum gelişebilir?","answer":"Hipoksi."},
-            {"question":"EFM'de trase üzerine yazılması zorunlu olan temel bilgiler nelerdir?","answer":""Gebenin adı soyadı, tarih ve saat.""},
-            {"question":"Aralıklı oskültasyonda doppler cihazı kullanılırken fetal kalp seslerini anne nabzından ayırt etmenin yolu nedir?","answer":"Aynı anda anne radyal nabzını palpe etmek."},
-            {"question":"Uterus taşisistolü tanımı için $10$ dakikalık sürede kaçtan fazla kasılma izlenmelidir?","answer":"$5$ kasılma."},
-            {"question":"Kategori 2 trase yönetiminde akselerasyon oluşmaması durumunda ebe neye hazırlık yapmalıdır?","answer":"Doğum (müdahaleli veya sezaryen) hazırlığı."},
-            {"question":"Variabilite yokluğu ile birlikte seyreden sinusoidal patern hangi riskli duruma işaret eder?","answer":"Ciddi fetal anemi veya asidemi."},
-            {"question":"Doğumun birinci evresinde fetal baş basısına bağlı görülen erken deselerasyonlar genellikle hangi fazda ortaya çıkar?","answer":"Aktif faz."},
-            {"question":"EFM probunun fetüsün sırtına yerleştirilmesinin teknik nedeni nedir?","answer":"Ses iletiminin en iyi fetal sırt uterus duvarına yakınken gerçekleşmesi."},
-            {"question":"Uzamış deselerasyon sırasında ebenin yapması gereken öncelikli konservatif girişim nedir?","answer":"Gebeye sol yan pozisyon vermek."},
-            {"question":"Amniyotik sıvı 'B' harfi ile partograma kaydedilmişse bu sıvının özelliğini nasıl tanımlar?","answer":"Berrak."},
-            {"question":"Partogramda 'S' harfi amniyotik membranların hangi durumunu temsil eder?","answer":"Sağlam."},
-            {"question":"Mekonyumun fetal tehlike işareti olabileceğini gösteren temel klinik bulgu nedir?","answer":"Fetal kalp atış hızındaki anormallikler."},
-            {"question":"İntrauterin resüsitasyonda oksijen maskesi ile kaç $L/dakika$ akım önerilir?","answer":"$10-15$ $L/dakika$ (Lohusa acil yönetimi referans alınmıştır)."},
-            {"question":"Kategori 2 traseler değerlendirilirken sadece traseye mi bakılmalıdır?","answer":""Hayır, gebe bulgularıyla birlikte bütünsel ele alınmalıdır.""},
-            {"question":"FKH'nın bazal düzeyde amplitüd değişikliğinin hiç olmaması ($0$ atım) hangi terimle ifade edilir?","answer":"Variabilite yokluğu (Absent variability)."},
-            {"question":"Fetüs izlemi sırasında fetal hareketlerde belirgin azalma saptanması neyin belirtisi olabilir?","answer":"Fetal distres."},
-            {"question":""Ebe, aralıklı oskültasyon sonucunda FKH'nın normal olduğunu saptarsa bu bulguyu nereye kaydetmelidir?"","answer":"Partograma."},
-            {"question":"Rejyonel anestezi uygulanması neden EFM endikasyonu olarak kabul edilir?","answer":"Maternal hipotansiyona bağlı fetal hipoksi riski nedeniyle."}
-        ];
+        <script>
+            const flashcardsData = [
+                {"question":"Düşük riskli gebelerde fetüs izlemi için kişiselleştirilmiş bakım planının bir parçası olarak önerilen yöntem hangisidir?","answer":"Aralıklı Oskültasyon"},
+                {"question":"Doğum süreci boyunca fetal kalp atış hızı izleme yönteminin değişebilmesinin temel nedeni nedir?","answer":"Risk değerlendirmesinin sürekli bir süreç olması."},
+                {"question":"Aralıklı oskültasyon işlemi hangi iki araçla gerçekleştirilebilir?","answer":"Pinard stetoskop veya el Doppleri."},
+                {"question":"Doğumun birinci evresinde aralıklı oskültasyon ne zaman ve ne kadar süreyle uygulanmalıdır?","answer":"Kontraksiyondan hemen sonra en az $30$ saniye boyunca."},
+                {"question":"Aralıklı oskültasyon düşük riskli gebelerde hangi zaman aralıklarıyla tekrarlanmalıdır?","answer":"Her $15-30$ dakikada bir."},
+                {"question":"Anne ve fetal kalp atışlarını ayırt etmek için anne nabzı hangi sıklıkla palpe edilmelidir?","answer":"Her saat başı."},
+                {"question":"Aralıklı oskültasyon sırasında fetal kalp atışı tespit edilemezse ebe ne yapmalıdır?","answer":"Acil ultrason değerlendirmesi için hekime bilgi vermelidir."},
+                {"question":"Doğum eylemi başlangıcından itibaren FKH'da kaç atımlık bir azalma ebeyi daha sık oskültasyon yapmaya yöneltmelidir?","answer":"$20$ atım ve üzerindeki azalmalar."},
+                {"question":"Aralıklı oskültasyon sırasında klinik tabloda riskli bir durum gelişirse hangi fetal izlem yöntemine geçilmelidir?","answer":"Sürekli Elektronik Fetal Monitörizasyon (EFM)."},
+                {"question":"Daha önce sezaryen doğum öyküsü olan bir gebede hangi fetal izleme yöntemi tercih edilmelidir?","answer":"Sürekli Elektronik Fetal Monitörizasyon (EFM)."},
+                {"question":"Fetal büyüme kısıtlılığında (tahmini fetal ağırlık $3$. persentil altı) hangi fetal değerlendirme yöntemi önerilir?","answer":"Sürekli Elektronik Fetal Monitörizasyon (EFM)."},
+                {"question":"Uterus kontraksiyonları $10$ dakikada kaç adet olduğunda intrapartum risk faktörü olarak kabul edilip EFM'ye geçilmelidir?","answer":"$5$ veya daha fazla kasılma."},
+                {"question":"EFM öncesinde fundus yüksekliğini ve fetüsün sırt pozisyonunu belirlemek için kullanılan fiziksel muayene yöntemi nedir?","answer":"Leopold manevraları."},
+                {"question":"EFM uygulamasında uterus kasılmalarını takip eden Toko transduseri karın üzerinde nereye yerleştirilmelidir?","answer":"Uterin fundusun en tepe noktasına."},
+                {"question":"EFM işlemi sırasında gebenin hangi pozisyonda yatması önerilir?","answer":"Sol yan pozisyon."},
+                {"question":"Doğumun aktif fazında EFM trasesi kaç dakikada bir değerlendirilmelidir?","answer":"$30$ dakikada bir."},
+                {"question":"Doğumun geçiş fazında EFM trasesi hangi sıklıkla değerlendirilmelidir?","answer":"$15$ dakikada bir."},
+                {"question":"Normal bazal fetal kalp hızı (FKH) aralığı nedir?","answer":"$110-160$ atım/dakika."},
+                {"question":"Fetal taşikardi tanısı koymak için bazal kalp hızının en az kaç dakika süreyle $160$ atım/dakika üzerinde olması gerekir?","answer":"$10$ dakika."},
+                {"question":"FKH'nın en az $10$ dakika değerlendirilmesi sonucunda $110$ atım/dakika altında olmasına ne ad verilir?","answer":"Fetal bradikardi."},
+                {"question":"Fetal oksijenizasyonun yeterliliğini gösteren, FKH'nın bazal düzeydeki iniş çıkışlarını ifade eden parametre nedir?"","answer":"Variabilite."},
+                {"question":"Variabilite yokluğu (No variability) tanımında FKH amplitüdü hangi aralıktadır?","answer":"$0-2$ atım/dakika."},
+                {"question":"Azalmış variabilitede (Minimal variability) FKH amplitüdü kaç atım aralığındadır?","answer":"$3-5$ atım/dakika."},
+                {"question":"Normal variabilite durumunda FKH'ndaki amplitüd değerleri nedir?","answer":"$6-25$ atım/dakika."},
+                {"question":"Artmış variabilitenin (Marked variability) tanım kriteri nedir?","answer":"Amplitüdün $25$ atım/dakika ve üzerinde olması."},
+                {"question":"Doğumun birinci evresinde akselerasyon kabul edilmesi için FKH artışının en az ne kadar sürmesi gerekir?","answer":"$15$ saniye."},
+                {"question":"Akselerasyon tanımı için bazal kalp hızında en az kaç atımlık bir artış izlenmelidir?","answer":"$15$ atım."},
+                {"question":"Uterus kontraksiyonu ile eş zamanlı başlayan, fetal baş basısına bağlı görülen deselerasyon türü hangisidir?"","answer":"Erken deselerasyon."},
+                {"question":"Erken deselerasyonun EFM trasesinde oluşturduğu karakteristik şekil nedir?","answer":"Ters ayna şekli."},
+                {"question":"Erken deselerasyonda FKH'daki düşüş en fazla kaç atım olmaktadır?","answer":"$15$ atım."},
+                {"question":"Umbilikal kordonun sıkışmasına bağlı meydana geldiği kabul edilen deselerasyon türü nedir?","answer":"Variabl (Değişken) deselerasyon."},
+                {"question":"Variabl deselerasyonda FKH, $30$ saniyede en düşük noktasına kaç atımlık düşüşle ulaşır?"","answer":"$15$ atım."},
+                {"question":"Uteroplasental yetmezliğe işaret eden ve kontraksiyonun doruk noktasından sonra başlayan deselerasyon türü hangisidir?","answer":"Geç deselerasyon."},
+                {"question":"Uzamış deselerasyon tanısı için FKH düşüşünün en az ne kadar sürmesi gerekir?","answer":"$2$ dakika."},
+                {"question":"Uzamış deselerasyon kaçıncı dakikadan sonra bazal kalp hızına dönmezse fetal taşikardi/bradikardi olarak değerlendirilir?","answer":"$10$ dakika."},
+                {"question":"FKH'nda $5-15$ atımlık düzenli dalga görünümü oluşturan, $3-5$ dakika frekansındaki patern nedir?"","answer":"Sinusoidal patern."},
+                {"question":"EFM yorumunda riskli bir durum tespit edildiğinde ebelerin uygulayacağı ilk girişimlerden biri nedir?","answer":"Gebeye sol yan ya da semi-fowler pozisyonu vermek."},
+                {"question":"Fetal distres şüphesinde uterotonik (oksitosin) ajan uygulanıyorsa izlenmesi gereken yol nedir?","answer":"Uygulamanın durdurulması ya da azaltılması."},
+                {"question":"Kategori 1 (Normal) trase kriterlerinde variabilite durumu nasıl olmalıdır?","answer":"Normal."},
+                {"question":"Bazal FKH'nın $110-160$ atım/dk olması ve erken deselerasyon varlığı hangi EFM kategorisine girer?","answer":"Kategori 1."},
+                {"question":"Fetal stimülasyon sonrası akselerasyon görülmemesi ve azalmış variabilite hangi kategoride değerlendirilir?","answer":"Kategori 2 (Şüpheli/Belirsiz)."},
+                {"question":"Kategori 3 (Anormal) trasenin temel variabilite özelliği nedir?","answer":"Variabilite yokluğu."},
+                {"question":"Tekrarlayan variabl deselerasyonlar ve variabilite yokluğu birlikte görüldüğünde hangi kategori tanısı konur?","answer":"Kategori 3."},
+                {"question":"İntrauterin resüsitasyon yöntemlerinin temel amacı nedir?","answer":"Hipoksik serebral palsi, iskemik ensefalopati ve mortaliteyi önlemek.""},
+                {"question":"Fetal iyilik halini doğrulamak için hekim tarafından uygulanan akselerasyon oluşturma testlerinden biri nedir?","answer":"Digital baş stimülasyonu (veya vibroakustik stimülasyon)."},
+                {"question":"Kategori 3 traselerde uteroplasental perfüzyonu artırma çabalarına rağmen düzelme olmazsa ne yapılmalıdır?","answer":"Acil doğum (sezaryen) hazırlığına başlanmalıdır."},
+                {"question":"Mekonyumlu amniyotik mayi varlığı fetüste hangi riskli durumun işareti olabilir?","answer":"Fetal distres."},
+                {"question":"Partogramda mekonyumlu amniyotik mayi şiddetini göstermek için kullanılan derecelendirme sembolleri nelerdir?","answer":"+, ++, +++."},
+                {"question":"FKH deselerasyonlarının partogram kayıtlarında 'Geç' olduğunu belirtmek için hangi harf kullanılır?","answer":"G."},
+                {"question":"Partogramda 'Kaput Suksadenum' ve 'Moulding' için hangi skor ebeyi hekimi bilgilendirmeye yöneltmelidir?","answer":"$+++$ (Üç artı)."},
+                {"question":"Bazal fetal kalp hızının hangi değerlerin dışında olması partogramda hekime bildirim kriteridir?","answer":"$< 110$ veya $\ge 160$ atım/dakika."},
+                {"question":"Amniyotik mayinin hangi özellikleri fetüs izleminde hekime haber verilmesini gerektirir?","answer":"Kanlı veya mekonyumlu olması."},
+                {"question":"Fetal pozisyonun hangi durumlarda olması partogram izleminde hekim bilgilendirme kriteridir?","answer":"Oksiput posterior veya oksiput transvers."},
+                {"question":"Amniyotik sıvıdaki mekonyum varlığı yenidoğanda hangi ciddi komplikasyona yol açabilir?","answer":"Mekonyum aspirasyon sendromu."},
+                {"question":"Düşük riskli gebelerde doğum salonuna ilk kabulde fetal kalp hızı paternini değerlendirmek için ne yapılmalıdır?","answer":"$20$ dakikalık EFM trasesi yazdırılmalıdır."},
+                {"question":"EFM trasesinde bazal nabzın $100$ atım/dakika altına inmesi ve variabilite kaybı ebeyi hangi acil duruma hazırlamalıdır?","answer":"Acil müdahale ve hekim bilgilendirme."},
+                {"question":"Vajinal muayenede kordon nabzı hissedilmesi hangi obstetrik acil durumu gösterir?","answer":"Kordon sarkması (prolapsusu)."},
+                {"question":"Kordon sarkması şüphesinde fetal kalp hızı paterninde genellikle hangi değişiklik görülür?","answer":"Ani şiddetli bradikardi veya tekrarlayan şiddetli değişken yavaşlamalar."},
+                {"question":"Fetal distres tanısı konulan gebede perinatal mortaliteyi önlemek için sezaryen en geç kaç dakika içinde yapılmalıdır?","answer":"$30$ dakika."},
+                {"question":"Doğumun ikinci evresinde fetal baş perineyi kabartmaya başladığında fetal kalp sesleri ne zaman dinlenmelidir?","answer":"Kontraksiyonlardan hemen sonra."},
+                {"question":"Makat prezentasyonda fetal kalp sesleri genellikle annenin karnında nerede en iyi duyulur?","answer":"Göbek (umbilikus) seviyesinin üzerinde."},
+                {"question":"Amniyotomi (zarların yapay rüptürü) sonrası fetal kalp hızı neden tekrar değerlendirilmelidir?","answer":"Kordon basısı veya prolapsusu riskini ekarte etmek için."},
+                {"question":"Yenidoğan doğduktan sonra Apgar skoru değerlendirmesi hangi dakikalarda yapılmalıdır?","answer":"$1.$ ve $5.$ dakikalarda."},
+                {"question":"Trasede değişken (variabl) deselerasyonlar sürekli tekrarlıyor ve tedaviye yanıt vermiyorsa fetüste hangi durum gelişebilir?","answer":"Hipoksi."},
+                {"question":"EFM'de trase üzerine yazılması zorunlu olan temel bilgiler nelerdir?","answer":"Gebenin adı soyadı, tarih ve saat.""},
+                {"question":"Aralıklı oskültasyonda doppler cihazı kullanılırken fetal kalp seslerini anne nabzından ayırt etmenin yolu nedir?","answer":"Aynı anda anne radyal nabzını palpe etmek."},
+                {"question":"Uterus taşisistolü tanımı için $10$ dakikalık sürede kaçtan fazla kasılma izlenmelidir?","answer":"$5$ kasılma."},
+                {"question":"Kategori 2 trase yönetiminde akselerasyon oluşmaması durumunda ebe neye hazırlık yapmalıdır?","answer":"Doğum (müdahaleli veya sezaryen) hazırlığı."},
+                {"question":"Variabilite yokluğu ile birlikte seyreden sinusoidal patern hangi riskli duruma işaret eder?","answer":"Ciddi fetal anemi veya asidemi."},
+                {"question":"Doğumun birinci evresinde fetal baş basısına bağlı görülen erken deselerasyonlar genellikle hangi fazda ortaya çıkar?","answer":"Aktif faz."},
+                {"question":"EFM probunun fetüsün sırtına yerleştirilmesinin teknik nedeni nedir?","answer":"Ses iletiminin en iyi fetal sırt uterus duvarına yakınken gerçekleşmesi."},
+                {"question":"Uzamış deselerasyon sırasında ebenin yapması gereken öncelikli konservatif girişim nedir?","answer":"Gebeye sol yan pozisyon vermek."},
+                {"question":"Amniyotik sıvı 'B' harfi ile partograma kaydedilmişse bu sıvının özelliğini nasıl tanımlar?","answer":"Berrak."},
+                {"question":"Partogramda 'S' harfi amniyotik membranların hangi durumunu temsil eder?","answer":"Sağlam."},
+                {"question":"Mekonyumun fetal tehlike işareti olabileceğini gösteren temel klinik bulgu nedir?","answer":"Fetal kalp atış hızındaki anormallikler."},
+                {"question":"İntrauterin resüsitasyonda oksijen maskesi ile kaç $L/dakika$ akım önerilir?","answer":"$10-15$ $L/dakika$ (Lohusa acil yönetimi referans alınmıştır)."},
+                {"question":"Kategori 2 traseler değerlendirilirken sadece traseye mi bakılmalıdır?","answer":"Hayır, gebe bulgularıyla birlikte bütünsel ele alınmalıdır.""},
+                {"question":"FKH'nın bazal düzeyde amplitüd değişikliğinin hiç olmaması ($0$ atım) hangi terimle ifade edilir?","answer":"Variabilite yokluğu (Absent variability)."},
+                {"question":"Fetüs izlemi sırasında fetal hareketlerde belirgin azalma saptanması neyin belirtisi olabilir?","answer":"Fetal distres."},
+                {"question":"Ebe, aralıklı oskültasyon sonucunda FKH'nın normal olduğunu saptarsa bu bulguyu nereye kaydetmelidir?"","answer":"Partograma."},
+                {"question":"Rejyonel anestezi uygulanması neden EFM endikasyonu olarak kabul edilir?","answer":"Maternal hipotansiyona bağlı fetal hipoksi riski nedeniyle."}
+            ];
 
-        let currentCardIndex = 0;
-        const flashcardElement = document.getElementById('flashcard');
-        const questionElement = document.getElementById('question');
-        const answerElement = document.getElementById('answer');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const flipBtn = document.getElementById('flipBtn');
-        const cardCounterElement = document.getElementById('cardCounter');
+            let currentCardIndex = 0;
+            const flashcardElement = document.getElementById('flashcard');
+            const questionElement = document.getElementById('question');
+            const answerElement = document.getElementById('answer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const flipBtn = document.getElementById('flipBtn');
+            const cardCounterElement = document.getElementById('cardCounter');
 
-        function updateCardDisplay() {
-            const card = flashcardsData[currentCardIndex];
-            questionElement.textContent = card.question;
-            answerElement.textContent = card.answer;
-            flashcardElement.classList.remove('flipped'); // Ensure card is question-side up
+            function updateCardDisplay() {
+                const card = flashcardsData[currentCardIndex];
+                questionElement.textContent = card.question;
+                answerElement.textContent = card.answer;
+                flashcardElement.classList.remove('flipped'); // Ensure card is question-side up
 
-            prevBtn.disabled = currentCardIndex === 0;
-            nextBtn.disabled = currentCardIndex === flashcardsData.length - 1;
-            cardCounterElement.textContent = `Card ${currentCardIndex + 1} of ${flashcardsData.length}`;
-        }
-
-        flashcardElement.addEventListener('click', () => {
-            flashcardElement.classList.toggle('flipped');
-        });
-
-        flipBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent card click event from firing twice
-            flashcardElement.classList.toggle('flipped');
-        });
-
-        nextBtn.addEventListener('click', () => {
-            if (currentCardIndex < flashcardsData.length - 1) {
-                currentCardIndex++;
-                updateCardDisplay();
+                prevBtn.disabled = currentCardIndex === 0;
+                nextBtn.disabled = currentCardIndex === flashcardsData.length - 1;
+                cardCounterElement.textContent = `Card ${currentCardIndex + 1} of ${flashcardsData.length}`;
             }
-        });
 
-        prevBtn.addEventListener('click', () => {
-            if (currentCardIndex > 0) {
-                currentCardIndex--;
-                updateCardDisplay();
-            }
-        });
+            flashcardElement.addEventListener('click', () => {
+                flashcardElement.classList.toggle('flipped');
+            });
 
-        // Initialize the first card
-        updateCardDisplay();
-    </script>
-</body>
+            flipBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent card click event from firing twice
+                flashcardElement.classList.toggle('flipped');
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentCardIndex < flashcardsData.length - 1) {
+                    currentCardIndex++;
+                    updateCardDisplay();
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentCardIndex > 0) {
+                    currentCardIndex--;
+                    updateCardDisplay();
+                }
+            });
+
+            // Initialize the first card
+            updateCardDisplay();
+        </script>
+    </body>
 </html>
