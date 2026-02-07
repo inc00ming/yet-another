@@ -1,43 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thesis Defense Flashcards</title>
+    <title>Ebelik Tez Savunması - Bilgi Kartları</title>
+    <meta name="description" content="Ebelik tez savunması hazırlık kartları - Ebelik Yönetmeliği ve uygulamaları">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-rose: #E8B4BC;
+            --primary-coral: #F4A7B9;
+            --primary-blush: #FFDEE2;
+            --accent-teal: #7BC5C1;
+            --accent-sage: #A8D5BA;
+            --text-dark: #4A4A4A;
+            --text-muted: #6B7280;
+            --background-warm: #FFF9FA;
+            --card-shadow: 0 20px 60px rgba(244, 167, 185, 0.2);
+            --button-shadow: 0 8px 25px rgba(123, 197, 193, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-color: #e9f0f7; /* Soft blue fallback */
-            background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1f9 100%);
-            color: #333;
             margin: 0;
             padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .container {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 700px;
-            width: 100%;
-            text-align: center;
+            background: var(--background-warm);
+            background-image: 
+                radial-gradient(ellipse at 20% 80%, rgba(232, 180, 188, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(123, 197, 193, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 222, 226, 0.2) 0%, transparent 70%);
+            color: var(--text-dark);
             position: relative;
-            margin-bottom: 20px;
+            overflow-x: hidden;
         }
 
-        .flashcard-wrapper {
-            perspective: 1000px; /* For 3D flip effect */
-            height: 250px; /* Fixed height for flashcard */
+        /* Decorative floating elements */
+        .decoration {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .decoration-1 {
+            top: 10%;
+            left: 5%;
+            font-size: 120px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .decoration-2 {
+            bottom: 15%;
+            right: 8%;
+            font-size: 100px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .decoration-3 {
+            top: 60%;
+            left: 8%;
+            font-size: 80px;
+            animation: float 7s ease-in-out infinite 1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-coral), var(--accent-teal));
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 10px 30px rgba(244, 167, 185, 0.3);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(244, 167, 185, 0.3); }
+            50% { transform: scale(1.03); box-shadow: 0 15px 40px rgba(244, 167, 185, 0.4); }
+        }
+
+        .logo-icon svg {
+            width: 45px;
+            height: 45px;
+            fill: white;
+        }
+
+        h1 {
+            color: var(--text-dark);
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            padding: 35px;
+            max-width: 720px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .progress-wrapper {
+            margin-bottom: 25px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--primary-blush);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-coral), var(--accent-teal));
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .flashcard-wrapper {
+            perspective: 1200px;
+            height: 280px;
             margin-bottom: 25px;
         }
 
@@ -45,20 +180,22 @@
             position: relative;
             width: 100%;
             height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
             cursor: pointer;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background-color: #fdfdfd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 20px;
+        }
+
+        .flashcard:hover {
+            transform: scale(1.01);
         }
 
         .flashcard.flipped {
             transform: rotateY(180deg);
+        }
+
+        .flashcard.flipped:hover {
+            transform: rotateY(180deg) scale(1.01);
         }
 
         .flashcard-front, .flashcard-back {
@@ -67,211 +204,205 @@
             height: 100%;
             backface-visibility: hidden;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            font-size: 1.3em;
-            line-height: 1.6;
-            box-sizing: border-box;
-            word-wrap: break-word; /* Ensure long words break */
-            white-space: pre-wrap; /* Preserve whitespace and allow wrapping */
+            padding: 30px;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            border-radius: 20px;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(145deg, #fff5f6 0%, var(--primary-blush) 100%);
+            color: #7D4E57;
+            border: 2px solid rgba(244, 167, 185, 0.3);
+        }
+
+        .flashcard-front::before {
+            content: "❓";
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            opacity: 0.7;
         }
 
         .flashcard-back {
             transform: rotateY(180deg);
-            background-color: #e8f5e9; /* Light green for answer */
-            color: #2e7d32;
+            background: linear-gradient(145deg, #f0faf8 0%, #e6f7f5 100%);
+            color: #3D6B67;
+            border: 2px solid rgba(123, 197, 193, 0.3);
         }
 
-        .flashcard-front {
-            background-color: #e3f2fd; /* Light blue for question */
-            color: #1976d2;
+        .flashcard-back::before {
+            content: "✓";
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .tap-hint {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0.6;
         }
 
         .controls {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         button {
-            background-color: #4CAF50; /* Green */
+            background: linear-gradient(135deg, var(--accent-teal), #5DB5B0);
             color: white;
-            padding: 12px 25px;
+            padding: 14px 32px;
             border: none;
-            border-radius: 6px;
+            border-radius: 14px;
             cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-            margin: 0 10px;
-            min-width: 120px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--button-shadow);
+            min-width: 130px;
         }
 
         button:hover:not(:disabled) {
-            background-color: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(123, 197, 193, 0.4);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(-1px);
         }
 
         button:disabled {
-            background-color: #cccccc;
+            background: #D1D5DB;
             cursor: not-allowed;
+            box-shadow: none;
         }
 
-        .card-counter {
-            font-size: 1.1em;
-            font-weight: 500;
-            color: #555;
-            min-width: 80px;
+        #flipBtn {
+            background: linear-gradient(135deg, var(--primary-coral), #E8929F);
+            box-shadow: 0 8px 25px rgba(244, 167, 185, 0.3);
         }
 
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 25px;
-            font-size: 2.2em;
+        #flipBtn:hover:not(:disabled) {
+            box-shadow: 0 12px 35px rgba(244, 167, 185, 0.4);
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer a {
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 20px;
+                padding: 25px 20px;
             }
+            
+            .flashcard-wrapper {
+                height: 300px;
+            }
+            
             .flashcard-front, .flashcard-back {
-                font-size: 1.1em;
+                font-size: 1rem;
+                padding: 25px 20px;
             }
+            
             button {
-                padding: 10px 15px;
-                font-size: 0.9em;
+                padding: 12px 24px;
+                font-size: 0.95rem;
+                min-width: 110px;
             }
-            .controls {
-                flex-direction: column;
-            }
-            button {
-                margin: 10px 0;
-            }
-            .card-counter {
-                margin-top: 15px;
-            }
+            
             h1 {
-                font-size: 1.8em;
+                font-size: 1.6rem;
+            }
+            
+            .logo-icon {
+                width: 65px;
+                height: 65px;
+            }
+            
+            .decoration {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <h1>Thesis Defense Flashcards</h1>
+    <!-- Decorative elements -->
+    <div class="decoration decoration-1">👶</div>
+    <div class="decoration decoration-2">💕</div>
+    <div class="decoration decoration-3">🤱</div>
+
+    <div class="header">
+        <div class="logo-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+        </div>
+        <h1>Ebelik Tez Savunması</h1>
+        <p class="subtitle">Bilgi Kartları ile Hazırlık</p>
+    </div>
 
     <div class="container">
-        <div class="flashcard-wrapper">
-            <div id="flashcard" class="flashcard">
-                <div class="flashcard-front" id="question"></div>
-                <div class="flashcard-back" id="answer"></div>
+        <div class="progress-wrapper">
+            <div class="progress-info">
+                <span class="progress-label">İlerleme</span>
+                <span class="progress-label" id="cardCounter">1 / 93</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 1%"></div>
             </div>
         </div>
-        <div class="controls">
-            <button id="prevBtn" disabled>Previous</button>
-            <button id="flipBtn">Flip Card</button>
-            <button id="nextBtn">Next</button>
+
+        <div class="flashcard-wrapper">
+            <div id="flashcard" class="flashcard">
+                <div class="flashcard-front" id="question">
+                    <span class="tap-hint">Cevabı görmek için tıklayın</span>
+                </div>
+                <div class="flashcard-back" id="answer">
+                    <span class="tap-hint">Soruya dönmek için tıklayın</span>
+                </div>
+            </div>
         </div>
-        <div class="card-counter" id="cardCounter"></div>
+
+        <div class="controls">
+            <button id="prevBtn" disabled>← Önceki</button>
+            <button id="flipBtn">Çevir</button>
+            <button id="nextBtn">Sonraki →</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🌸 Ebelik eğitimi için özenle hazırlandı 🌸</p>
     </div>
 
     <script>
-        const flashcardsData = [
-            {"question":"Ebelik Yönetmeliği'ne göre \"doğum sonrası dönem\" (puerperium) ne kadarlık bir süreyi ifade eder?","answer":"Doğumdan sonraki ilk altı hafta."},
-            {"question":"Ebelik Yönetmeliği'ne göre yaklaşık 40 haftalık süreci kapsayan \"gebelik dönemi\" ne zaman sona erer?","answer":"Fetüsün doğumuyla."},
-            {"question":"Ebelik anabilim dallarında yüksek lisans eğitimini tamamlayıp diploması Bakanlıkça tescil edilen ebe hangi unvanı alır?","answer":"Uzman ebe."},
-            {"question":"Klinik uyum sürecini kolaylaştırmak ve normal doğumu teşvik eden oryantasyon programını yürütmekle görevli ebe hangisidir?","answer":"Rehber ebe."},
-            {"question":"Doğumhanede sorumlu ebe olarak görevlendirilecek kişinin öncelikle sahip olması gereken klinik deneyim süresi ne kadardır?","answer":"En az üç yıl düzenli çalışma."},
-            {"question":"Ebe, yetişkin bir bireyde kardiyo-pulmoner resusitasyon ihtiyacı saptadığında temel yaşam desteğini başlattıktan sonra eş zamanlı olarak ne yapmalıdır?","answer":"Mavi Kod Ekibi veya 112 Acil Yardım Ekibine haber vermek."},
-            {"question":"Ebelerin adli olgu değerlendirme sürecine dâhil olmasını gerektiren özel gebelik durumu nedir?","answer":"18 yaş altı gebelikler."},
-            {"question":"Ebelik Yönetmeliği uyarınca, ebenin normalden sapma tespit ettiği gebeleri yönlendirmesi gereken makam hangisidir?","answer":"İlgili hekim veya ilgili birim."},
-            {"question":"Görevi teslim alacak ebe gelmeden ve hasta başında sözlü/yazılı teslim yapmadan görev yerinden ayrılmak yasak mıdır?","answer":"Evet, görev yerinden ayrılamaz."},
-            {"question":"Gebelikte oluşabilecek riskli belirtileri tanıma ve normalden sapma durumunda sevk sürecini başlatma yetkisi kime aittir?","answer":"Ebe."},
-            {"question":"Ebe, fetal iyilik halini değerlendirmek için hangi elektronik yöntemi uygulama yetkisine sahiptir?","answer":"Non-stress test (NST)."},
-            {"question":"Kanama kontrolü sırasında şok bulguları saptayan bir ebe, hekimin bulunmadığı bir ortamda nasıl hareket etmelidir?","answer":"Gerekli müdahaleleri uygulayıp sevk sürecini başlatmalıdır."},
-            {"question":"Doğum eylemi sırasında pelvisin vajinal doğuma uygunluğunu ve fetal pozisyonu belirlemek için kullanılan manevra hangisidir?","answer":"Leopold manevraları."},
-            {"question":"Ebe, doğum sırasında travayda maternal ve fetal iyilik halini izlemek için hangi grafiksel aracı kullanır?","answer":"Partograf."},
-            {"question":"Makat gelişi doğumlarda, sevkin mümkün olmadığı acil durumlarda doğumu yaptırma yetkisi kime verilmiştir?","answer":"Ebe."},
-            {"question":"Normal doğum sırasında ebe hangi cerrahi kesiyi uygulama endikasyonu oluştuğunda bu işlemi yapabilir?","answer":"Epizyotomi."},
-            {"question":"Ebe, hangi derecedeki perineal ve vajinal laserasyonlara doğrudan müdahale edebilir?","answer":"1. ve komplike olmayan 2. derece laserasyonlar."},
-            {"question":"Ebe, komplike 2. derece veya daha ileri perineal laserasyonlarda öncelikle hangi önlemleri alarak sevk sürecini başlatır?","answer":"Kanama ve enfeksiyon önlemleri."},
-            {"question":"Hekimin bulunmadığı postpartum kanama durumlarında ebenin uygulayabileceği acil kompresyon yöntemlerinden biri nedir?","answer":"İnternal bimanuel kompresyon (veya aortik kompresyon/balon tamponad)."},
-            {"question":"Doğum sonrası plasenta ve eklerinin muayenesinden sonra ebenin involüsyonun sağlanması için değerlendirmesi gereken temel yapı hangisidir?","answer":"Uterus kontraksiyonları ve tonüsü."},
-            {"question":"Operatif doğum veya sezaryen kararı verilmiş gebelerde üretral mesane sondası uygulama yetkisi kime aittir?","answer":"Ebe."},
-            {"question":"Doğum sonrasında anne-bebek bağlanmasını desteklemek için ebe tarafından uygulanması gereken ilk adım nedir?","answer":"Anne-bebek ten temasını sağlamak."},
-            {"question":"Emzirmenin tıbbi olarak baskılanması gereken durumlarda ilaç dışı yöntemleri uygulama ve süreci takip etme sorumluluğu kime aittir?","answer":"Ebe."},
-            {"question":"Lohusalık döneminde sepsisten şüphelenen bir ebe, hekimin olmadığı durumda ne yapmalıdır?","answer":"Gerekli önlemleri alarak sevk sürecini başlatmalıdır."},
-            {"question":"Yenidoğanda enteral beslenmeyi sağlamak amacıyla nazogastrik veya orogastrik sonda uygulama yetkisi ebeye verilmiş midir?","answer":"Evet, bu yetki ebeye verilmiştir."},
-            {"question":"Ebenin rahim içi araç (RİA) uygulaması yapabilmesi için hangi belgeye sahip olması zorunludur?","answer":"Bakanlık tarafından düzenlenen RİA yetki belgesi."},
-            {"question":"Sorumlu ebe olarak atanacak ebe bulunamadığı takdirde, sağlık kurumu hangi şartla diğer ebeleri görevlendirebilir?","answer":"Gerekçelendirmek koşuluyla."},
-            {"question":"Sağlık kuruluşunda ebelere yönelik çalışma çizelgelerini hazırlama ve amirin onayına sunma görevi kime aittir?","answer":"Sorumlu ebe."},
-            {"question":"Rehber ebe görevlendirmesinde öncelikli olarak hangi unvana sahip ebeler tercih edilir?","answer":"En az üç yıl deneyimli uzman ebeler."},
-            {"question":"Ebe, gebelik döneminde hekim tarafından istemde bulunulan hangi laboratuvar işlemlerini yürütür?","answer":"Test sonuçlarının değerlendirilmesi için gebeyi hekime yönlendirir ve danışmanlık yapar."},
-            {"question":"Fetüs, yenidoğan ve çocuk haklarını korumak amacıyla her türlü ihmal ve istismar durumunda bildirim yapma görevi kime aittir?","answer":"Ebe."},
-            {"question":"Normal doğum izleminde ebe, bimanuel vajinal muayene ile serviksin hangi iki özelliğini değerlendirir?","answer":"Dilatasyon (açılma) ve efasman (silinme)."},
-            {"question":"Ebelik Yönetmeliği'ne göre, ebenin doğum sırasında kordon ile ilgili yapması gereken işlem nedir?","answer":"Umbilikal kordu klemplemek ve kesmek."},
-            {"question":"Ebelerin üreme sağlığı kapsamında kadın haklarını korumaya yönelik hangi durumları bildirme yükümlülüğü vardır?","answer":"Şiddet, ihmal ve istismar."},
-            {"question":"Sorumlu ebe, birimdeki ebe stajyerlerinin eğitimi için neyi sağlamakla yükümlüdür?","answer":"Uygun eğitim ortamını sağlamak."},
-            {"question":"Ebenin doğum öncesinde, esnasında ve sonrasında anneye karşı üstlendiği temel psikolojik rol nedir?","answer":"Destekleyici rol."},
-            {"question":"Doğum sırasında maternal ve fetal iyilik halini izlemek için ebenin kullandığı el tipi cihaz hangisidir?","answer":"El doppleri (veya fetoskop)."},
-            {"question":"Ebe, doğum eyleminde kordon prolapsusu tespit ettiğinde hekim gelene kadar ne yapmalıdır?","answer":"Acil durum tedbirlerini almalıdır."},
-            {"question":"Lohusa izlemi sırasında \"annelik hüznü\" veya \"depresyon\" saptayan bir ebe nasıl bir yol izler?","answer":"İlgili hekime haber verir ve hekimle iş birliği yapar."},
-            {"question":"Ebelerin çocuk sağlığı hizmetleri kapsamında büyüme ve gelişme takibi dışında katıldığı koruyucu hizmet hangisidir?","answer":"Bağışıklama (aşı) hizmetleri."},
-            {"question":"Ebelik Yönetmeliği'ne göre \"doğum izlemi\" tanımı hangi fizyolojik olaylarla başlar?","answer":"Serviksin açılmasına ve silinmesine neden olan kontraksiyonlar."},
-            {"question":"Ebenin gebelik öncesi dönemdeki temel amacı nedir?","answer":"Kadının ruhsal ve fiziksel olarak gebeliğe hazırlanması."},
-            {"question":"Birinci basamak sağlık hizmetlerinde ebe için \"ilgili hekim\" ifadesi kimi temsil eder?","answer":"Bireyin bağlı bulunduğu aile hekimini."},
-            {"question":"Ebeler, ebelik bakımı sunarken hangi bilimsel temele dayalı hareket etmek zorundadır?","answer":"Kanıta dayalı ebelik bakımı."},
-            {"question":"Ebe, bulaşıcı bir hastalık saptadığında veya şüphelendiğinde nereye bildirim yapmalıdır?","answer":"İlgili mercilere."},
-            {"question":"Ebe, gebelik döneminde fetüsün doğumuna kadar geçen sürede hangi koruyucu tıbbi hizmeti sunar?","answer":"Aşılama hizmetleri."},
-            {"question":"Doğum korkusu ile başa çıkmada ebe kime danışmanlık verir?","answer":"Gebe ve ailesine."},
-            {"question":"Doğum sırasında ebenin çevresel uyaranları kontrol altına almasının temel amacı nedir?","answer":"Güvenli doğum ortamını ve fizyolojik süreci sağlamak."},
-            {"question":"Ebe, doğum raporunu hangi verileri içerecek şekilde düzenlemekle sorumludur?","answer":"Maternal/fetal öykü ve tıbbi bilgiler."},
-            {"question":"Yenidoğanda risk belirtilerini tanıyan ebe, hekimle iş birliği yaparken normalden sapma halinde hangi süreci başlatır?","answer":"Sevk süreci."},
-            {"question":"Lohusa izleminde ebenin fiziksel muayene dışında değerlendirmesi gereken durum nedir?","answer":"Doğum sonrası mental durum."},
-            {"question":"Ebe, üreme çağındaki kadınlara doğurganlığın düzenlenmesi konusunda hangi hizmetleri verir?","answer":"Eğitim ve danışmanlık."},
-            {"question":"Sorumlu ebe, birimindeki tıbbi malzeme eksikliklerini kime bildirmekle yükümlüdür?","answer":"Yönetime."},
-            {"question":"Uzman ebe, klinik rollerinin yanı sıra hangi konularda kurumlara bilirkişilik yapabilir?","answer":"Uzmanlık alanı ve etik konular."},
-            {"question":"Ebelik Yönetmeliği uyarınca, ebeler hangi öğrencilerin eğitimine destek vermekle yükümlüdür?","answer":"Ebelik öğrencileri ve ebe yardımcıları."},
-            {"question":"Doğum sonrası kanama takibinde ebenin değerlendirmesi gereken temel klinik tablo nedir?","answer":"Şok ve şok öncesi bulguları."},
-            {"question":"Ebe, acil durumlarda hekimin hangi tür tıbbi istemini kabul edebilir?","answer":"Şifahi (sözlü) tıbbi istem."},
-            {"question":"Gebelikte fundus yüksekliği takibinde normalden sapma tespit eden ebe ne yapmalıdır?","answer":"Olguyu ilgili hekime yönlendirmelidir."},
-            {"question":"Doğum eylemi süresince ebenin gebenin beslenmesine yönelik yetkisi nedir?","answer":"Sıvı ve besin alımına yönelik düzenlemeleri yapmak."},
-            {"question":"Ebe, yenidoğanın güvenliğini sağlamak için hangi işlemi ilk bakımda gerçekleştirir?","answer":"Kimliklendirme."},
-            {"question":"Anne sütünün azalması durumunda ebenin görevi nedir?","answer":"Anne sütünün artırılmasına yönelik danışmanlık ve takip."},
-            {"question":"Anne ölümü vakalarında ebe hangi prosedürü izlemekle yükümlüdür?","answer":"Bakanlık uygulamaları doğrultusunda gerekli belgeleri hazırlamak."},
-            {"question":"Ebelik uygulamalarında enfeksiyon kontrolü için ebenin temel sorumluluğu nedir?","answer":"Enfeksiyon önleme ve kontrol yöntemlerini kullanmak."},
-            {"question":"Ebe, üreme sağlığı politikalarının yürütülmesinde hangi düzeyde görev alır?","answer":"Ulusal sağlık politikalarının yürütülmesinde."},
-            {"question":"Jinekolojik cerrahi işlemlerde ebenin bakım sorumluluğu hangi aşamaları kapsar?","answer":"Ameliyat öncesi ve sonrası bakım."},
-            {"question":"Ebenin gebe ve ailesine günlük yaşam aktivitelerini planlama görevi hangi dönemde başlar?","answer":"Gebelik öncesi ve gebelik dönemi."},
-            {"question":"Doğumun fizyolojik sürecini yöneten ebe, travayın uyarılmasını hangi yetki kapsamında sağlar?","answer":"Ebelik uygulamaları kapsamında."},
-            {"question":"Ebe, hangi durumda sevk sırasında doğumu gerçekleştirme yetkisine sahiptir?","answer":"Hekimin olmadığı ve sevkin mümkün olmadığı hallerde."},
-            {"question":"Doğum sonrası dönemde ebenin lohusaya yaptırması gereken fiziksel aktivite türü nedir?","answer":"Toparlanma egzersizleri."},
-            {"question":"Yenidoğandan laboratuvar incelemesi için numune alma yetkisi ebeye verilmiş midir?","answer":"Evet; kan, idrar, gaita ve benzeri numuneleri alabilir."},
-            {"question":"Yetki belgesine sahip ebelerin görevlendirilmesinde öncelik durumu nedir?","answer":"Yetki belgesi gerektiren alanlarda öncelikli olarak görevlendirilirler."},
-            {"question":"Sorumlu ebe, ebelerin performans değerlendirmesini hangi mevzuat doğrultusunda yapar?","answer":"İlgili mevzuat doğrultusunda."},
-            {"question":"Hangi ebe türü klinik bilgi ve becerinin yanı sıra danışmanlık ve eğitim programlama sorumluluğu alır?","answer":"Uzman ebe."},
-            {"question":"Ebenin acil durumlarda tıbbi araç-gereç ve ilaçları nasıl bulundurması gerekir?","answer":"Her zaman kullanıma hazır."},
-            {"question":"Yönetmeliğe göre, ebenin hastada beklenmeyen bir durum geliştiğinde alması gereken tedbirler neye uygun olmalıdır?","answer":"Sağlıkta kalite standartları."},
-            {"question":"Gebelikte fundus yüksekliği takibinde normalden sapma tespit eden ebe ne yapmalıdır?","answer":"Olguyu ilgili hekime yönlendirmelidir."},
-            {"question":"Doğum eylemi süresince ebenin gebenin beslenmesine yönelik yetkisi nedir?","answer":"Sıvı ve besin alımına yönelik düzenlemeleri yapmak."},
-            {"question":"Ebe, yenidoğanın güvenliğini sağlamak için hangi işlemi ilk bakımda gerçekleştirir?","answer":"Kimliklendirme."},
-            {"question":"Anne sütünün azalması durumunda ebenin görevi nedir?","answer":"Anne sütünün artırılmasına yönelik danışmanlık ve takip."},
-            {"question":"Anne ölümü vakalarında ebe hangi prosedürü izlemekle yükümlüdür?","answer":"Bakanlık uygulamaları doğrultusunda gerekli belgeleri hazırlamak."},
-            {"question":"Ebelik uygulamalarında enfeksiyon kontrolü için ebenin temel sorumluluğu nedir?","answer":"Enfeksiyon önleme ve kontrol yöntemlerini kullanmak."},
-            {"question":"Ebe, üreme sağlığı politikalarının yürütülmesinde hangi düzeyde görev alır?","answer":"Ulusal sağlık politikalarının yürütülmesinde."},
-            {"question":"Jinekolojik cerrahi işlemlerde ebenin bakım sorumluluğu hangi aşamaları kapsar?","answer":"Ameliyat öncesi ve sonrası bakım."},
-            {"question":"Ebenin gebe ve ailesine günlük yaşam aktivitelerini planlama görevi hangi dönemde başlar?","answer":"Gebelik öncesi ve gebelik dönemi."},
-            {"question":"Doğumun fizyolojik sürecini yöneten ebe, travayın uyarılmasını hangi yetki kapsamında sağlar?","answer":"Ebelik uygulamaları kapsamında."},
-            {"question":"Ebe, hangi durumda sevk sırasında doğumu gerçekleştirme yetkisine sahiptir?","answer":"Hekimin olmadığı ve sevkin mümkün olmadığı hallerde."},
-            {"question":"Doğum sonrası dönemde ebenin lohusaya yaptırması gereken fiziksel aktivite türü nedir?","answer":"Toparlanma egzersizleri."},
-            {"question":"Yenidoğandan laboratuvar incelemesi için numune alma yetkisi ebeye verilmiş midir?","answer":"Evet; kan, idrar, gaita ve benzeri numuneleri alabilir."},
-            {"question":"Yetki belgesine sahip ebelerin görevlendirilmesinde öncelik durumu nedir?","answer":"Yetki belgesi gerektiren alanlarda öncelikli olarak görevlendirilirler."},
-            {"question":"Sorumlu ebe, ebelerin performans değerlendirmesini hangi mevzuat doğrultusunda yapar?","answer":"İlgili mevzuat doğrultusunda."},
-            {"question":"Hangi ebe türü klinik bilgi ve becerinin yanı sıra danışmanlık ve eğitim programlama sorumluluğu alır?","answer":"Uzman ebe."},
-            {"question":"Ebenin acil durumlarda tıbbi araç-gereç ve ilaçları nasıl bulundurması gerekir?","answer":"Her zaman kullanıma hazır."},
-            {"question":"Yönetmeliğe göre, ebenin hastada beklenmeyen bir durum geliştiğinde alması gereken tedbirler neye uygun olmalıdır?","answer":"Sağlıkta kalite standartları."}
-        ];
-
+        // CSV data will be loaded from flashcards.csv in the same directory
+        let flashcardsData = [];
         let currentCardIndex = 0;
+
         const flashcardElement = document.getElementById('flashcard');
         const questionElement = document.getElementById('question');
         const answerElement = document.getElementById('answer');
@@ -279,16 +410,59 @@
         const nextBtn = document.getElementById('nextBtn');
         const flipBtn = document.getElementById('flipBtn');
         const cardCounterElement = document.getElementById('cardCounter');
+        const progressFill = document.getElementById('progressFill');
+
+        // Parse CSV function
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            const data = [];
+            
+            for (let line of lines) {
+                // Handle quoted fields with commas
+                const matches = line.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+                if (matches && matches.length >= 2) {
+                    const question = matches[0].replace(/^"|"$/g, '').replace(/""/g, '"');
+                    const answer = matches.slice(1).join(',').replace(/^"|"$/g, '').replace(/""/g, '"').trim();
+                    data.push({ question, answer });
+                }
+            }
+            return data;
+        }
+
+        // Load CSV file
+        async function loadFlashcards() {
+            try {
+                const response = await fetch('flashcards.csv');
+                const text = await response.text();
+                flashcardsData = parseCSV(text);
+                updateCardDisplay();
+            } catch (error) {
+                console.error('Error loading flashcards:', error);
+                flashcardsData = [{ question: 'CSV dosyası yüklenemedi', answer: 'Lütfen flashcards.csv dosyasının mevcut olduğundan emin olun.' }];
+                updateCardDisplay();
+            }
+        }
 
         function updateCardDisplay() {
+            if (flashcardsData.length === 0) return;
+            
             const card = flashcardsData[currentCardIndex];
-            questionElement.textContent = card.question;
-            answerElement.textContent = card.answer;
-            flashcardElement.classList.remove('flipped'); // Ensure card is question-side up
+            questionElement.childNodes[0] ? questionElement.childNodes[0].textContent = '' : null;
+            answerElement.childNodes[0] ? answerElement.childNodes[0].textContent = '' : null;
+            
+            // Keep the tap hint and update content
+            questionElement.innerHTML = card.question + '<span class="tap-hint">Cevabı görmek için tıklayın</span>';
+            answerElement.innerHTML = card.answer + '<span class="tap-hint">Soruya dönmek için tıklayın</span>';
+            
+            flashcardElement.classList.remove('flipped');
 
             prevBtn.disabled = currentCardIndex === 0;
             nextBtn.disabled = currentCardIndex === flashcardsData.length - 1;
-            cardCounterElement.textContent = `Card ${currentCardIndex + 1} of ${flashcardsData.length}`;
+            cardCounterElement.textContent = `${currentCardIndex + 1} / ${flashcardsData.length}`;
+            
+            // Update progress bar
+            const progress = ((currentCardIndex + 1) / flashcardsData.length) * 100;
+            progressFill.style.width = `${progress}%`;
         }
 
         flashcardElement.addEventListener('click', () => {
@@ -296,7 +470,7 @@
         });
 
         flipBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent card click event from firing twice
+            e.stopPropagation();
             flashcardElement.classList.toggle('flipped');
         });
 
@@ -314,8 +488,22 @@
             }
         });
 
-        // Initialize the first card
-        updateCardDisplay();
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentCardIndex < flashcardsData.length - 1) {
+                currentCardIndex++;
+                updateCardDisplay();
+            } else if (e.key === 'ArrowLeft' && currentCardIndex > 0) {
+                currentCardIndex--;
+                updateCardDisplay();
+            } else if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                flashcardElement.classList.toggle('flipped');
+            }
+        });
+
+        // Initialize
+        loadFlashcards();
     </script>
 </body>
 </html>
