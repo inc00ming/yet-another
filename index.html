@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thesis Defense Flashcards</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .flashcard-wrapper {
+            perspective: 1000px; /* For 3D flip effect */
+            height: 250px; /* Fixed height for flashcard */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-size: 1.3em;
+            line-height: 1.6;
+            box-sizing: border-box;
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: pre-wrap; /* Preserve whitespace and allow wrapping */
+        }
+
+        .flashcard-back {
+            transform: rotateY(180deg);
+            background-color: #e8f5e9; /* Light green for answer */
+            color: #2e7d32;
+        }
+
+        .flashcard-front {
+            background-color: #e3f2fd; /* Light blue for question */
+            color: #1976d2;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            margin: 0 10px;
+            min-width: 120px;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .card-counter {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #555;
+            min-width: 80px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .flashcard-front, .flashcard-back {
+                font-size: 1.1em;
+            }
+            button {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+            .controls {
+                flex-direction: column;
+            }
+            button {
+                margin: 10px 0;
+            }
+            .card-counter {
+                margin-top: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Thesis Defense Flashcards</h1>
+
+    <div class="container">
+        <div class="flashcard-wrapper">
+            <div id="flashcard" class="flashcard">
+                <div class="flashcard-front" id="question"></div>
+                <div class="flashcard-back" id="answer"></div>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="prevBtn" disabled>Previous</button>
+            <button id="flipBtn">Flip Card</button>
+            <button id="nextBtn">Next</button>
+        </div>
+        <div class="card-counter" id="cardCounter"></div>
+    </div>
+
+    <script>
+        const flashcardsData = [
+            {"question":"Ebelik Yönetmeliği'ne göre \"doğum sonrası dönem\" (puerperium) ne kadarlık bir süreyi ifade eder?","answer":"Doğumdan sonraki ilk altı hafta."},
+            {"question":"Ebelik Yönetmeliği'ne göre yaklaşık 40 haftalık süreci kapsayan \"gebelik dönemi\" ne zaman sona erer?","answer":"Fetüsün doğumuyla."},
+            {"question":"Ebelik anabilim dallarında yüksek lisans eğitimini tamamlayıp diploması Bakanlıkça tescil edilen ebe hangi unvanı alır?","answer":"Uzman ebe."},
+            {"question":"Klinik uyum sürecini kolaylaştırmak ve normal doğumu teşvik eden oryantasyon programını yürütmekle görevli ebe hangisidir?","answer":"Rehber ebe."},
+            {"question":"Doğumhanede sorumlu ebe olarak görevlendirilecek kişinin öncelikle sahip olması gereken klinik deneyim süresi ne kadardır?","answer":"En az üç yıl düzenli çalışma."},
+            {"question":"Ebe, yetişkin bir bireyde kardiyo-pulmoner resusitasyon ihtiyacı saptadığında temel yaşam desteğini başlattıktan sonra eş zamanlı olarak ne yapmalıdır?","answer":"Mavi Kod Ekibi veya 112 Acil Yardım Ekibine haber vermek."},
+            {"question":"Ebelerin adli olgu değerlendirme sürecine dâhil olmasını gerektiren özel gebelik durumu nedir?","answer":"18 yaş altı gebelikler."},
+            {"question":"Ebelik Yönetmeliği uyarınca, ebenin normalden sapma tespit ettiği gebeleri yönlendirmesi gereken makam hangisidir?","answer":"İlgili hekim veya ilgili birim."},
+            {"question":"Görevi teslim alacak ebe gelmeden ve hasta başında sözlü/yazılı teslim yapmadan görev yerinden ayrılmak yasak mıdır?","answer":"Evet, görev yerinden ayrılamaz."},
+            {"question":"Gebelikte oluşabilecek riskli belirtileri tanıma ve normalden sapma durumunda sevk sürecini başlatma yetkisi kime aittir?","answer":"Ebe."},
+            {"question":"Ebe, fetal iyilik halini değerlendirmek için hangi elektronik yöntemi uygulama yetkisine sahiptir?","answer":"Non-stress test (NST)."},
+            {"question":"Kanama kontrolü sırasında şok bulguları saptayan bir ebe, hekimin bulunmadığı bir ortamda nasıl hareket etmelidir?","answer":"Gerekli müdahaleleri uygulayıp sevk sürecini başlatmalıdır."},
+            {"question":"Doğum eylemi sırasında pelvisin vajinal doğuma uygunluğunu ve fetal pozisyonu belirlemek için kullanılan manevra hangisidir?","answer":"Leopold manevraları."},
+            {"question":"Ebe, doğum sırasında travayda maternal ve fetal iyilik halini izlemek için hangi grafiksel aracı kullanır?","answer":"Partograf."},
+            {"question":"Makat gelişi doğumlarda, sevkin mümkün olmadığı acil durumlarda doğumu yaptırma yetkisi kime verilmiştir?","answer":"Ebe."},
+            {"question":"Normal doğum sırasında ebe hangi cerrahi kesiyi uygulama endikasyonu oluştuğunda bu işlemi yapabilir?","answer":"Epizyotomi."},
+            {"question":"Ebe, hangi derecedeki perineal ve vajinal laserasyonlara doğrudan müdahale edebilir?","answer":"1. ve komplike olmayan 2. derece laserasyonlar."},
+            {"question":"Ebe, komplike 2. derece veya daha ileri perineal laserasyonlarda öncelikle hangi önlemleri alarak sevk sürecini başlatır?","answer":"Kanama ve enfeksiyon önlemleri."},
+            {"question":"Hekimin bulunmadığı postpartum kanama durumlarında ebenin uygulayabileceği acil kompresyon yöntemlerinden biri nedir?","answer":"İnternal bimanuel kompresyon (veya aortik kompresyon/balon tamponad)."},
+            {"question":"Doğum sonrası plasenta ve eklerinin muayenesinden sonra ebenin involüsyonun sağlanması için değerlendirmesi gereken temel yapı hangisidir?","answer":"Uterus kontraksiyonları ve tonüsü."},
+            {"question":"Operatif doğum veya sezaryen kararı verilmiş gebelerde üretral mesane sondası uygulama yetkisi kime aittir?","answer":"Ebe."},
+            {"question":"Doğum sonrasında anne-bebek bağlanmasını desteklemek için ebe tarafından uygulanması gereken ilk adım nedir?","answer":"Anne-bebek ten temasını sağlamak."},
+            {"question":"Emzirmenin tıbbi olarak baskılanması gereken durumlarda ilaç dışı yöntemleri uygulama ve süreci takip etme sorumluluğu kime aittir?","answer":"Ebe."},
+            {"question":"Lohusalık döneminde sepsisten şüphelenen bir ebe, hekimin olmadığı durumda ne yapmalıdır?","answer":"Gerekli önlemleri alarak sevk sürecini başlatmalıdır."},
+            {"question":"Yenidoğanda enteral beslenmeyi sağlamak amacıyla nazogastrik veya orogastrik sonda uygulama yetkisi ebeye verilmiş midir?","answer":"Evet, bu yetki ebeye verilmiştir."},
+            {"question":"Ebenin rahim içi araç (RİA) uygulaması yapabilmesi için hangi belgeye sahip olması zorunludur?","answer":"Bakanlık tarafından düzenlenen RİA yetki belgesi."},
+            {"question":"Sorumlu ebe olarak atanacak ebe bulunamadığı takdirde, sağlık kurumu hangi şartla diğer ebeleri görevlendirebilir?","answer":"Gerekçelendirmek koşuluyla."},
+            {"question":"Sağlık kuruluşunda ebelere yönelik çalışma çizelgelerini hazırlama ve amirin onayına sunma görevi kime aittir?","answer":"Sorumlu ebe."},
+            {"question":"Rehber ebe görevlendirmesinde öncelikli olarak hangi unvana sahip ebeler tercih edilir?","answer":"En az üç yıl deneyimli uzman ebeler."},
+            {"question":"Ebe, gebelik döneminde hekim tarafından istemde bulunulan hangi laboratuvar işlemlerini yürütür?","answer":"Test sonuçlarının değerlendirilmesi için gebeyi hekime yönlendirir ve danışmanlık yapar."},
+            {"question":"Fetüs, yenidoğan ve çocuk haklarını korumak amacıyla her türlü ihmal ve istismar durumunda bildirim yapma görevi kime aittir?","answer":"Ebe."},
+            {"question":"Normal doğum izleminde ebe, bimanuel vajinal muayene ile serviksin hangi iki özelliğini değerlendirir?","answer":"Dilatasyon (açılma) ve efasman (silinme)."},
+            {"question":"Ebelik Yönetmeliği'ne göre, ebenin doğum sırasında kordon ile ilgili yapması gereken işlem nedir?","answer":"Umbilikal kordu klemplemek ve kesmek."},
+            {"question":"Ebelerin üreme sağlığı kapsamında kadın haklarını korumaya yönelik hangi durumları bildirme yükümlülüğü vardır?","answer":"Şiddet, ihmal ve istismar."},
+            {"question":"Sorumlu ebe, birimdeki ebe stajyerlerinin eğitimi için neyi sağlamakla yükümlüdür?","answer":"Uygun eğitim ortamını sağlamak."},
+            {"question":"Ebenin doğum öncesinde, esnasında ve sonrasında anneye karşı üstlendiği temel psikolojik rol nedir?","answer":"Destekleyici rol."},
+            {"question":"Doğum sırasında maternal ve fetal iyilik halini izlemek için ebenin kullandığı el tipi cihaz hangisidir?","answer":"El doppleri (veya fetoskop)."},
+            {"question":"Ebe, doğum eyleminde kordon prolapsusu tespit ettiğinde hekim gelene kadar ne yapmalıdır?","answer":"Acil durum tedbirlerini almalıdır."},
+            {"question":"Lohusa izlemi sırasında \"annelik hüznü\" veya \"depresyon\" saptayan bir ebe nasıl bir yol izler?","answer":"İlgili hekime haber verir ve hekimle iş birliği yapar."},
+            {"question":"Ebelerin çocuk sağlığı hizmetleri kapsamında büyüme ve gelişme takibi dışında katıldığı koruyucu hizmet hangisidir?","answer":"Bağışıklama (aşı) hizmetleri."},
+            {"question":"Ebelik Yönetmeliği'ne göre \"doğum izlemi\" tanımı hangi fizyolojik olaylarla başlar?","answer":"Serviksin açılmasına ve silinmesine neden olan kontraksiyonlar."},
+            {"question":"Ebenin gebelik öncesi dönemdeki temel amacı nedir?","answer":"Kadının ruhsal ve fiziksel olarak gebeliğe hazırlanması."},
+            {"question":"Birinci basamak sağlık hizmetlerinde ebe için \"ilgili hekim\" ifadesi kimi temsil eder?","answer":"Bireyin bağlı bulunduğu aile hekimini."},
+            {"question":"Ebeler, ebelik bakımı sunarken hangi bilimsel temele dayalı hareket etmek zorundadır?","answer":"Kanıta dayalı ebelik bakımı."},
+            {"question":"Ebe, bulaşıcı bir hastalık saptadığında veya şüphelendiğinde nereye bildirim yapmalıdır?","answer":"İlgili mercilere."},
+            {"question":"Ebe, gebelik döneminde fetüsün doğumuna kadar geçen sürede hangi koruyucu tıbbi hizmeti sunar?","answer":"Aşılama hizmetleri."},
+            {"question":"Doğum korkusu ile başa çıkmada ebe kime danışmanlık verir?","answer":"Gebe ve ailesine."},
+            {"question":"Doğum sırasında ebenin çevresel uyaranları kontrol altına almasının temel amacı nedir?","answer":"Güvenli doğum ortamını ve fizyolojik süreci sağlamak."},
+            {"question":"Ebe, doğum raporunu hangi verileri içerecek şekilde düzenlemekle sorumludur?","answer":"Maternal/fetal öykü ve tıbbi bilgiler."},
+            {"question":"Yenidoğanda risk belirtilerini tanıyan ebe, hekimle iş birliği yaparken normalden sapma halinde hangi süreci başlatır?","answer":"Sevk süreci."},
+            {"question":"Lohusa izleminde ebenin fiziksel muayene dışında değerlendirmesi gereken durum nedir?","answer":"Doğum sonrası mental durum."},
+            {"question":"Ebe, üreme çağındaki kadınlara doğurganlığın düzenlenmesi konusunda hangi hizmetleri verir?","answer":"Eğitim ve danışmanlık."},
+            {"question":"Sorumlu ebe, birimindeki tıbbi malzeme eksikliklerini kime bildirmekle yükümlüdür?","answer":"Yönetime."},
+            {"question":"Uzman ebe, klinik rollerinin yanı sıra hangi konularda kurumlara bilirkişilik yapabilir?","answer":"Uzmanlık alanı ve etik konular."},
+            {"question":"Ebelik Yönetmeliği uyarınca, ebeler hangi öğrencilerin eğitimine destek vermekle yükümlüdür?","answer":"Ebelik öğrencileri ve ebe yardımcıları."},
+            {"question":"Doğum sonrası kanama takibinde ebenin değerlendirmesi gereken temel klinik tablo nedir?","answer":"Şok ve şok öncesi bulguları."},
+            {"question":"Ebe, acil durumlarda hekimin hangi tür tıbbi istemini kabul edebilir?","answer":"Şifahi (sözlü) tıbbi istem."},
+            {"question":"Gebelikte fundus yüksekliği takibinde normalden sapma tespit eden ebe ne yapmalıdır?","answer":"Olguyu ilgili hekime yönlendirmelidir."},
+            {"question":"Doğum eylemi süresince ebenin gebenin beslenmesine yönelik yetkisi nedir?","answer":"Sıvı ve besin alımına yönelik düzenlemeleri yapmak."},
+            {"question":"Ebe, yenidoğanın güvenliğini sağlamak için hangi işlemi ilk bakımda gerçekleştirir?","answer":"Kimliklendirme."},
+            {"question":"Anne sütünün azalması durumunda ebenin görevi nedir?","answer":"Anne sütünün artırılmasına yönelik danışmanlık ve takip."},
+            {"question":"Anne ölümü vakalarında ebe hangi prosedürü izlemekle yükümlüdür?","answer":"Bakanlık uygulamaları doğrultusunda gerekli belgeleri hazırlamak."},
+            {"question":"Ebelik uygulamalarında enfeksiyon kontrolü için ebenin temel sorumluluğu nedir?","answer":"Enfeksiyon önleme ve kontrol yöntemlerini kullanmak."},
+            {"question":"Ebe, üreme sağlığı politikalarının yürütülmesinde hangi düzeyde görev alır?","answer":"Ulusal sağlık politikalarının yürütülmesinde."},
+            {"question":"Jinekolojik cerrahi işlemlerde ebenin bakım sorumluluğu hangi aşamaları kapsar?","answer":"Ameliyat öncesi ve sonrası bakım."},
+            {"question":"Ebenin gebe ve ailesine günlük yaşam aktivitelerini planlama görevi hangi dönemde başlar?","answer":"Gebelik öncesi ve gebelik dönemi."},
+            {"question":"Doğumun fizyolojik sürecini yöneten ebe, travayın uyarılmasını hangi yetki kapsamında sağlar?","answer":"Ebelik uygulamaları kapsamında."},
+            {"question":"Ebe, hangi durumda sevk sırasında doğumu gerçekleştirme yetkisine sahiptir?","answer":"Hekimin olmadığı ve sevkin mümkün olmadığı hallerde."},
+            {"question":"Doğum sonrası dönemde ebenin lohusaya yaptırması gereken fiziksel aktivite türü nedir?","answer":"Toparlanma egzersizleri."},
+            {"question":"Yenidoğandan laboratuvar incelemesi için numune alma yetkisi ebeye verilmiş midir?","answer":"Evet; kan, idrar, gaita ve benzeri numuneleri alabilir."},
+            {"question":"Yetki belgesine sahip ebelerin görevlendirilmesinde öncelik durumu nedir?","answer":"Yetki belgesi gerektiren alanlarda öncelikli olarak görevlendirilirler."},
+            {"question":"Sorumlu ebe, ebelerin performans değerlendirmesini hangi mevzuat doğrultusunda yapar?","answer":"İlgili mevzuat doğrultusunda."},
+            {"question":"Hangi ebe türü klinik bilgi ve becerinin yanı sıra danışmanlık ve eğitim programlama sorumluluğu alır?","answer":"Uzman ebe."},
+            {"question":"Ebenin acil durumlarda tıbbi araç-gereç ve ilaçları nasıl bulundurması gerekir?","answer":"Her zaman kullanıma hazır."},
+            {"question":"Yönetmeliğe göre, ebenin hastada beklenmeyen bir durum geliştiğinde alması gereken tedbirler neye uygun olmalıdır?","answer":"Sağlıkta kalite standartları."},
+            {"question":"Gebelikte fundus yüksekliği takibinde normalden sapma tespit eden ebe ne yapmalıdır?","answer":"Olguyu ilgili hekime yönlendirmelidir."},
+            {"question":"Doğum eylemi süresince ebenin gebenin beslenmesine yönelik yetkisi nedir?","answer":"Sıvı ve besin alımına yönelik düzenlemeleri yapmak."},
+            {"question":"Ebe, yenidoğanın güvenliğini sağlamak için hangi işlemi ilk bakımda gerçekleştirir?","answer":"Kimliklendirme."},
+            {"question":"Anne sütünün azalması durumunda ebenin görevi nedir?","answer":"Anne sütünün artırılmasına yönelik danışmanlık ve takip."},
+            {"question":"Anne ölümü vakalarında ebe hangi prosedürü izlemekle yükümlüdür?","answer":"Bakanlık uygulamaları doğrultusunda gerekli belgeleri hazırlamak."},
+            {"question":"Ebelik uygulamalarında enfeksiyon kontrolü için ebenin temel sorumluluğu nedir?","answer":"Enfeksiyon önleme ve kontrol yöntemlerini kullanmak."},
+            {"question":"Ebe, üreme sağlığı politikalarının yürütülmesinde hangi düzeyde görev alır?","answer":"Ulusal sağlık politikalarının yürütülmesinde."},
+            {"question":"Jinekolojik cerrahi işlemlerde ebenin bakım sorumluluğu hangi aşamaları kapsar?","answer":"Ameliyat öncesi ve sonrası bakım."},
+            {"question":"Ebenin gebe ve ailesine günlük yaşam aktivitelerini planlama görevi hangi dönemde başlar?","answer":"Gebelik öncesi ve gebelik dönemi."},
+            {"question":"Doğumun fizyolojik sürecini yöneten ebe, travayın uyarılmasını hangi yetki kapsamında sağlar?","answer":"Ebelik uygulamaları kapsamında."},
+            {"question":"Ebe, hangi durumda sevk sırasında doğumu gerçekleştirme yetkisine sahiptir?","answer":"Hekimin olmadığı ve sevkin mümkün olmadığı hallerde."},
+            {"question":"Doğum sonrası dönemde ebenin lohusaya yaptırması gereken fiziksel aktivite türü nedir?","answer":"Toparlanma egzersizleri."},
+            {"question":"Yenidoğandan laboratuvar incelemesi için numune alma yetkisi ebeye verilmiş midir?","answer":"Evet; kan, idrar, gaita ve benzeri numuneleri alabilir."},
+            {"question":"Yetki belgesine sahip ebelerin görevlendirilmesinde öncelik durumu nedir?","answer":"Yetki belgesi gerektiren alanlarda öncelikli olarak görevlendirilirler."},
+            {"question":"Sorumlu ebe, ebelerin performans değerlendirmesini hangi mevzuat doğrultusunda yapar?","answer":"İlgili mevzuat doğrultusunda."},
+            {"question":"Hangi ebe türü klinik bilgi ve becerinin yanı sıra danışmanlık ve eğitim programlama sorumluluğu alır?","answer":"Uzman ebe."},
+            {"question":"Ebenin acil durumlarda tıbbi araç-gereç ve ilaçları nasıl bulundurması gerekir?","answer":"Her zaman kullanıma hazır."},
+            {"question":"Yönetmeliğe göre, ebenin hastada beklenmeyen bir durum geliştiğinde alması gereken tedbirler neye uygun olmalıdır?","answer":"Sağlıkta kalite standartları."}
+        ];
+
+        let currentCardIndex = 0;
+        const flashcardElement = document.getElementById('flashcard');
+        const questionElement = document.getElementById('question');
+        const answerElement = document.getElementById('answer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const flipBtn = document.getElementById('flipBtn');
+        const cardCounterElement = document.getElementById('cardCounter');
+
+        function updateCardDisplay() {
+            const card = flashcardsData[currentCardIndex];
+            questionElement.textContent = card.question;
+            answerElement.textContent = card.answer;
+            flashcardElement.classList.remove('flipped'); // Ensure card is question-side up
+
+            prevBtn.disabled = currentCardIndex === 0;
+            nextBtn.disabled = currentCardIndex === flashcardsData.length - 1;
+            cardCounterElement.textContent = `Card ${currentCardIndex + 1} of ${flashcardsData.length}`;
+        }
+
+        flashcardElement.addEventListener('click', () => {
+            flashcardElement.classList.toggle('flipped');
+        });
+
+        flipBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent card click event from firing twice
+            flashcardElement.classList.toggle('flipped');
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentCardIndex < flashcardsData.length - 1) {
+                currentCardIndex++;
+                updateCardDisplay();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                updateCardDisplay();
+            }
+        });
+
+        // Initialize the first card
+        updateCardDisplay();
+    </script>
+</body>
+</html>
